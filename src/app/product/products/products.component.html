@@ -1,0 +1,7 @@
+
+<h4>List of Products</h4>
+
+<nav *ngFor="let product of products;">
+  <a (click)="handlePoductEvent(product.id)">{{product.name}}</a>
+</nav>
+<hr>
