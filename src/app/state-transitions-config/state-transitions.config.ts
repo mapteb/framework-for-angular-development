@@ -31,10 +31,6 @@ import { AppState } from './app-states.enum';
  * These functions pre-fetch data 
  */
 
-interface IEventProcessDictionary<TValue> {
-    [state_event: string]: TValue;
-}
-
 export const EventToProcessConfig = {
     login: { process: loginProcess, path: "/home"  },
     home: { roles: ['USER', 'ADMIN'], process: homeProcess, path: "/home" },
