@@ -36,7 +36,7 @@ describe('Unit test each state transition:', () => {
     component = fixture.componentInstance;
   });
 
-  it('GIVEN: begin state LOGINVIEW WHEN: login event triggered THEN: final state is HOMEVIEW', () => {
+  it('GIVEN: LOGINVIEW WHEN: login event triggered THEN: final state is HOMEVIEW', () => {
     const appData = new AppData();
     appData.user = new User('admin', '', '', 'ADMIN');
     //@ts-ignore
@@ -44,7 +44,7 @@ describe('Unit test each state transition:', () => {
     expect(appEventModel.appState).toBe(AppState.HOMEVIEW);
   });
 
-  it('GIVEN: begin state HOMEVIEW WHEN: products event triggered THEN: final state is PRODUCTSVIEW', () => {
+  it('GIVEN: HOMEVIEW WHEN: products event triggered THEN: final state is PRODUCTSVIEW', () => {
     console.log(">> is homeview: ", appDataStore.getCurrentState());
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMEVIEW);
@@ -52,7 +52,7 @@ describe('Unit test each state transition:', () => {
     expect(appEventModel.appState).toBe(AppState.PRODUCTSVIEW);
   });
 
-  it('GIVEN: begin state PRODUCTSVIEW WHEN: product event triggered THEN: final state is PRODUCTVIEW', () => {
+  it('GIVEN: PRODUCTSVIEW WHEN: product event triggered THEN: final state is PRODUCTVIEW', () => {
     console.log(">> is productsview: ", appDataStore.getCurrentState());
     const appData = new AppData();
     const product = new Product(1);
@@ -64,7 +64,7 @@ describe('Unit test each state transition:', () => {
     expect(appEventModel.appState).toBe(AppState.PRODUCTVIEW);
   });
 
-  it('GIVEN: begin state HOMEVIEW WHEN: admin event triggered THEN: final state is ADMINVIEW', () => {
+  it('GIVEN: HOMEVIEW WHEN: admin event triggered THEN: final state is ADMINVIEW', () => {
     console.log(">> is homeview: ", appDataStore.getCurrentState());
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.admin, appDataStore.getCurrentState());

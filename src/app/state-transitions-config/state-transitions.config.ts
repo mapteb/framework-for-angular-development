@@ -7,18 +7,17 @@ import { AppEvent } from './app-events.enum';
 import { AppState } from './app-states.enum';
 
 /**
- * The following state transitions correspond to the SPA tht we need to develop
+ * The following state transitions correspond to the SPA that we need to develop.
  * The five columns are: Initial State, pre-event, process, post-event and final state
  * State Transitions corresponding to eror events like products_error are not considered
  * here but can be easily added as aditional transitions
  * 
-
-  --
+  -----------------------------------------------------------------------------------
   LOGINVIEW     -> login    -> processLogin()    -> login_success    -> HOMEVIEW
   HOMEVIEW      -> products -> processProducts() -> products_success -> PRODUCTSVIEW
   PRODUCTSVIEW  -> product  -> processProduct()  -> product_success  -> PRODUCTVIEW
   HOMEVIEW      -> admin    -> processAdmin()    -> admin_success    -> ADMINVIEW
-  --
+  -----------------------------------------------------------------------------------
  *      
  * 
  * TODO: To support a bookmarked applicationn URL like /products a transition like below can be added
@@ -27,10 +26,13 @@ import { AppState } from './app-states.enum';
 
 /** 
  * This const configures the process that should be triggered when a pre-event is raised.
- * the homeProcess, productsProcess and productProcess are imported functions.
- * These functions pre-fetch data 
+ * the loginProcess, homeProcess, productsProcess, productProcess and adminProcess are imported functions.
+ * These functions pre-fetch data. When these functions complete and eturn the request will be forwarded to 
+ * the path URL configured. Although this functionality could be accomplished in app-routing.module.ts
+ * using resolve and data properties, this configuration in conjunction with the doTransition method in the
+ * base.component.ts enables  some simplifications in creating unit test scripts
+ * (See: test-state-transitions.spec.ts)
  */
-
 export const EventToProcessConfig = {
     login: { process: loginProcess, path: "/home"  },
     home: { roles: ['USER', 'ADMIN'], process: homeProcess, path: "/home" },

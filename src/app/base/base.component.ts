@@ -28,7 +28,7 @@ export class BaseComponent implements OnInit {
     protected appDataStore: AppDataStoreService) {
     console.log('>> received url: ', router.url);
     if (router.url !== '/' && router.url !== '/login') {
-      if (this.router.getCurrentNavigation()) {
+      if (router.getCurrentNavigation()) {
         const navigationExtras = router.getCurrentNavigation()?.extras;
         if (navigationExtras && navigationExtras.state && navigationExtras.state['trsnData']) {
           this.appEventModel = navigationExtras.state['trsnData'];
