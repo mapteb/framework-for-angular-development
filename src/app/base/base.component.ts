@@ -104,11 +104,17 @@ export class BaseComponent implements OnInit {
 
           // Call the process to pre-fetch data for the view
           appEventModel = EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore);
-          appDataStore.setCurrentState(appEventModel.appState);
 
           // If the process returns a success then route to the path
           if (appEventModel.appEvent.toString().endsWith("_success")) {
-            this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
+            const isNavigated = this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
+            isNavigated.then(res => {
+                if (res) {
+                  appDataStore.setCurrentState(appEventModel.appState);
+                } else {
+                  appDataStore.setCurrentState(AppState.UNKNOWN);
+                }
+            });
           } else {
             // TODO: need to implement error transitions like products_error etc.
             appEventModel.message = { error: "Process Error" };
