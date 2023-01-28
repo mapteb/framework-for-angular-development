@@ -12,7 +12,7 @@ import { UserRole } from "src/app/state-transitions-config/user-role.enum";
  * 
  * Pre-fetches data for the view
  * 
- * TODO: need to ad a new transition for product_error
+ * TODO: need to ad a new transition for product error
  * 
  * @param appEventModel 
  * @param appDataStore 
@@ -25,7 +25,7 @@ export function productProcess(appEventModel: AppEventModel, appDataStore: AppDa
         if (appEventModel.appData?.product.id &&
                 appEventModel.appData.product.id > 0) {
                 appDataStore.loadProduct(appEventModel.appData.product.id);
-                appEventModel.appEvent = AppEvent.product_success;
+                appEventModel.appEvent = AppEvent.success;
                 appEventModel.appState = AppState.PRODUCTVIEW;
         }
 

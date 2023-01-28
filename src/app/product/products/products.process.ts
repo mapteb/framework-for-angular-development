@@ -13,7 +13,7 @@ import { UserRole } from "src/app/state-transitions-config/user-role.enum";
  * 
  * Pre-fetches data for the view.
  * 
- * TODO: Need to add new transitions for error events like products_error
+ * TODO: Need to add new transitions for error events like products error
  * 
 */
 export function productsProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService):
@@ -21,7 +21,7 @@ export function productsProcess(appEventModel: AppEventModel, appDataStore: AppD
         console.log(">> processing products request");
 
         appDataStore.loadProducts();
-        appEventModel.appEvent = AppEvent.products_success;
+        appEventModel.appEvent = AppEvent.success;
         appEventModel.appState = AppState.PRODUCTSVIEW;
 
         return appEventModel;

@@ -13,10 +13,11 @@ import { AppState } from './app-states.enum';
  * here but can be easily added as aditional transitions
  * 
   -----------------------------------------------------------------------------------
-  LOGINVIEW     -> login    -> processLogin()    -> login_success    -> HOMEVIEW
-  HOMEVIEW      -> products -> processProducts() -> products_success -> PRODUCTSVIEW
-  PRODUCTSVIEW  -> product  -> processProduct()  -> product_success  -> PRODUCTVIEW
-  HOMEVIEW      -> admin    -> processAdmin()    -> admin_success    -> ADMINVIEW
+  LOGINVIEW     -> login    -> processLogin()    -> success    -> LOGINSUCCESS
+  LOGINSUCCESS  -> home     -> processHome()     -> success    -> HOMEVIEW
+  HOMEVIEW      -> products -> processProducts() -> success    -> PRODUCTSVIEW
+  PRODUCTSVIEW  -> product  -> processProduct()  -> success    -> PRODUCTVIEW
+  HOMEVIEW      -> admin    -> processAdmin()    -> success    -> ADMINVIEW
   -----------------------------------------------------------------------------------
  *      
  * 

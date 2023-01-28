@@ -106,7 +106,7 @@ export class BaseComponent implements OnInit {
           appEventModel = EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore);
 
           // If the process returns a success then route to the path
-          if (appEventModel.appEvent.toString().endsWith("_success")) {
+          if (appEventModel.appEvent === 'success') {
             const isNavigated = this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
             isNavigated.then(res => {
                 if (res) {
@@ -116,7 +116,6 @@ export class BaseComponent implements OnInit {
                 }
             });
           } else {
-            // TODO: need to implement error transitions like products_error etc.
             appEventModel.message = { error: "Process Error" };
             this.router.navigate(['/**'], { state: { trsnData: appEventModel } });
           }

@@ -7,10 +7,10 @@ import { AppState } from "src/app/state-transitions-config/app-states.enum";
 /**
  * This function supports the following state transitions:
  * 
- *  HOMEVIEW  -> admin  -> processAdmin()  -> admin_success  -> ADMINVIEW
+ *  HOMEVIEW  -> admin  -> processAdmin()  -> success  -> ADMINVIEW
  * 
  * 
- *  * TODO: need to add a new transition for admin_error
+ *  * TODO: need to add a new transition for admin error
  * 
  * @param appEventModel 
  * @param appDataStore
@@ -20,7 +20,7 @@ export function adminProcess(appEventModel: AppEventModel, appDataStore: AppData
     const user = appDataStore.getUser();
     console.log(">> processing login request for user: ", user);
 
-    appEventModel.appEvent = AppEvent.admin_success;
+    appEventModel.appEvent = AppEvent.success;
     appEventModel.appState = AppState.ADMINVIEW;
 
     return appEventModel;

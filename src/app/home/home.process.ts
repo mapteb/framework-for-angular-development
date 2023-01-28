@@ -7,9 +7,7 @@ import { UserRole } from "../state-transitions-config/user-role.enum";
 /**
  * This function supports the following state transitions:
  * 
- *  UNKNOWN       -> home     -> processHome()     -> home_success     -> HOMEVIEW
- *  PRODUCTSVIEW  -> home     -> processHome()     -> home_success     -> HOMEVIEW
- *  PRODUCTVIEW   -> home     -> processHome()     -> home_success     -> HOMEVIEW
+ *  LOGINSUCCESS  -> home     -> processHome()     -> success     -> HOMEVIEW
  * 
  *  This function also enforces the user role required to process the request
  * 
@@ -22,7 +20,7 @@ import { UserRole } from "../state-transitions-config/user-role.enum";
 export function homeProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): AppEventModel {
     console.log(">> processing home request");
 
-    appEventModel.appEvent = AppEvent.home_success;
+    appEventModel.appEvent = AppEvent.success;
     appEventModel.appState = AppState.HOMEVIEW;
 
     return appEventModel;
