@@ -1,21 +1,30 @@
-# A Framework for Angular Development
+## A Framework for Angular Development
 
-This project presents a testing-friendly TypeScipt framework for Angular development.
+This project has a tiny TypeScipt framework for Angular development. The framework enables simple Angular development and testing.
 
-The fraework has the following features:
+### Development Workflow
 
-1. Implements the smart/presentational component UI pttern
-1. Simplifies creating unit test and e2e test scripts.
-2. Browser back button navigation and bookmarked intermediate application URL navigation are disabled by default but can be supported when needed.
+The framework suggests the following steps:
 
-The development workflow to use this component in an Angular project are:
+1. Write the requirements as a set of view transitions, (See the header comments in state-transitions.config.ts)
+2. Configure the transitions in a Typescript const variable, (See state-transitions.config.ts)
+3. Create Typescript functions that pre-fetch data for each view, (See product.process.ts)
+4. A smart component uses the above configuration to manage various view transitions. (See, for example, base.component.ts)
 
-1. Configure all the supported view transitions in [state-transitions.config.ts](https://github.com/mapteb/smart-component-for-angular-projects/blob/main/src/app/state-transitions-config/state-transitions.config.ts)
-2. Add one process function for each view (like [product.process.ts](https://github.com/mapteb/smart-component-for-angular-projects/blob/main/src/app/product/product/product.process.ts), [products.process.ts](https://github.com/mapteb/smart-component-for-angular-projects/blob/main/src/app/product/products/products.process.ts) etc.)
-3. Add view components and extend them from the smart component ([base.component.ts](https://github.com/mapteb/smart-component-for-angular-projects/blob/main/src/app/base/base.component.ts))
+A sample implementation of the above steps for a simple SPA with views like HOMEVIEW, PRODUCTVIEW and PRODUCTSVIEW can be viewed at StackBlitz. 
 
-Usage of this framework for a small project can be viewed in [StackBlitz](https://stackblitz.com/edit/angular-ivy-glvqom?file=README.md)
+### Unit Testing
 
-A demo of the running application can be viewed [here](https://mapteb.github.io/smart-component-for-angular-projects/home).
+The framework enables writing unit testing scripts quickly. (See test-state-transitions.spec.ts)
 
-Unit tests can be run using the "ng test" command and e2e integration tests can be run using the command "ng e2e".
+The unit test script can be run using the command - ng test
+
+### e2e Testing
+
+The framework also enables writing e2e scripts quickly. (See cypress-integration-tests.spec.ts)
+
+The integration test script can be run using the command - ng e2e
+
+### Extending the Sample SPA
+
+An extended version of the sample SPA with authentication and authorization is in the main branch of this project.
