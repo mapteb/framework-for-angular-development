@@ -1,6 +1,6 @@
 ## A Framework for Angular Development
 
-This project has a tiny TypeScipt framework for Angular development. The framework enables simple Angular development and testing.
+This branch (starter-example) contains a simplified version of that found in the main branch.
 
 ### Development Workflow
 
@@ -11,7 +11,7 @@ The framework suggests the following steps:
 3. Create Typescript functions that pre-fetch data for each view, (See product.process.ts)
 4. A smart component uses the above configuration to manage various view transitions. (See, for example, base.component.ts)
 
-A sample implementation of the above steps for a simple SPA with views like HOMEVIEW, PRODUCTVIEW and PRODUCTSVIEW can be viewed at StackBlitz. 
+A sample implementation of the above steps for a simple SPA with views like HOMEVIEW, PRODUCTVIEW and PRODUCTSVIEW can be viewed in [StackBlitz](https://stackblitz.com/edit/angular-ivy-glvqom?file=README.md) 
 
 ### Unit Testing
 
