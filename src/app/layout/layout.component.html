@@ -3,7 +3,6 @@
   <section *ngIf="(appDataStore.currentState$ | async) !== 'UNKNOWN' ? true : false">
     <button (click)="handleHomeEvent()" class="mrgn1" [disabled]="(currentState$ | async) === 'HOMEVIEW'">Home</button>
     <button (click)="handleProductsEvent()" class="mrgn1" [disabled]="(currentState$ | async) === 'PRODUCTSVIEW'">Products</button>
-    <button *ngIf="(appDataStore.user$ | async)?.role === 'ADMIN' ? true : false" (click)="handleAdminEvent()" class="mrgn1">Admin</button>
   </section>
   <hr>
 </section>

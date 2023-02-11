@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuthService } from '../auth/auth.service';
-import { User } from '../auth/user.model';
 import { Product } from '../product/product.model';
 import { ProductsService } from '../product/products.service';
 import { AppEventModel } from './app-event.model';
@@ -18,14 +16,12 @@ export class AppDataStoreService {
 
   protected productsStore = new BehaviorSubject<Product[]>([]);
   protected productStore = new BehaviorSubject<Product>(new Product());
-  protected userStore = new BehaviorSubject<User>(new User('', '', '', ''));
-  public user$ = this.userStore.asObservable();
   protected currentState = new BehaviorSubject<AppState>(AppState.UNKNOWN);
   public currentState$ = this.currentState.asObservable();
   protected preTransitionData = new BehaviorSubject<AppEventModel>(new AppEventModel());
   public preTransitionData$ = this.preTransitionData.asObservable();
 
-  constructor(protected productsService: ProductsService, protected authService: AuthService,) { }
+  constructor(protected productsService: ProductsService) { }
 
   // used to restore a previous view
   setPreTransitonData(preTransitionData: AppEventModel) {
@@ -61,26 +57,12 @@ export class AppDataStoreService {
     return this.productStore.getValue();
   }
 
-  setUser(user: User) {
-    this.userStore.next(user);
-  }
-
-  getUser(): User {
-    return this.userStore.getValue();
-  }
-
   loadProducts() {
     this.productsService.getProducts().pipe(take(1)).subscribe(res => this.setProducts(res));
   }
 
   loadProduct(id: any) {
     this.productsService.getProduct(id).pipe(take(1)).subscribe(res => this.setProduct(res));
-  }
-
-  login(loginId: string) {
-    this.authService.login(loginId).pipe(take(1)).subscribe(res => {
-      this.setUser(res);
-    });
   }
 }
 

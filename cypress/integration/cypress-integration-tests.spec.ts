@@ -1,20 +1,10 @@
 describe('Walkthrough all state transitions', () => {
-  it('From UNKNOWN state, when site accessed, should load Login page', () => {
+  it('From UNKNOWN state, when site accessed, should load home page', () => {
     cy.visit('/')
-    cy.contains('Login')
-  })
-  it('From LOGINVIEW state, when Login for submitted, should load Home page', () => {
-    cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
     cy.contains('Home works!')
   })
   it('From HOMEVIEW state, when Products button clicked, should load Products List page', () => {
     cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
     cy.contains('Home works!')
     cy.get('button').contains('Products').click()
     cy.contains('List of Products')
@@ -23,9 +13,6 @@ describe('Walkthrough all state transitions', () => {
   })
   it('From PRODUCTSVIEW state, when a product link clicked, should load product details of the product', () => {
     cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
     cy.contains('Home works!')
     cy.get('button').contains('Products').click()
     cy.contains('List of Products')
@@ -34,10 +21,6 @@ describe('Walkthrough all state transitions', () => {
   })
   it('From PRODUCTVIEW state, when Back to Products button clicked, should load Products List page', () => {
     cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
-    cy.contains('Home works!')
     cy.contains('Home works!')
     cy.get('button').contains('Products').click()
     cy.contains('List of Products')
@@ -47,9 +30,6 @@ describe('Walkthrough all state transitions', () => {
   })
   it('From PRODUCTVIEW state, when Products menu button clicked, should load Products List page', () => {
     cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
     cy.contains('Home works!')
     cy.get('button').contains('Products').click()
     cy.contains('List of Products')
@@ -63,9 +43,6 @@ describe('Walkthrough all state transitions', () => {
   })
   it('From PRODUCTSVIEW state, when browser Back button clicked, should stay in products list', () => {
     cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
     cy.contains('Home works!')
     cy.get('button').contains('Products').click()
     cy.contains('List of Products')
@@ -76,15 +53,5 @@ describe('Walkthrough all state transitions', () => {
     cy.visit('/products')
     cy.contains('Page not found')
   })
-  it('From HOMEVIEW state, when Admin button clicked, should load admin page', () => {
-    cy.visit('/')
-    cy.contains('Login')
-    cy.get('[id=loginId]').type('admin')
-    cy.get('button').contains('Login').click()
-    cy.contains('Home works!')
-    cy.get('button').contains('Admin').click()
-    cy.contains('admin works!')
-  })
-
 })
 

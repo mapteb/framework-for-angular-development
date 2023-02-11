@@ -6,7 +6,6 @@ import { BaseComponent } from '../base/base.component';
 import { AppEvent } from '../state-transitions-config/app-events.enum';
 import { AppState } from '../state-transitions-config/app-states.enum';
 import { AppDataStoreService } from '../state-transitions-config/app-data-store.service';
-import { User } from '../auth/user.model';
 
 /**
  * This Angular component loads a view with a
@@ -23,7 +22,6 @@ export class LayoutComponent extends BaseComponent implements OnInit {
 
   title = "A Framework for Angular Development.";
   currentState$: Observable<AppState>;
-  user$: Observable<User>;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
@@ -32,8 +30,6 @@ export class LayoutComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
-    // this.currentState$ = this.appDataStore.currentState$;
-    // this.user$ = this.appDataStore.user$;
   }
 
   // a handler for the user raised event
@@ -46,9 +42,5 @@ export class LayoutComponent extends BaseComponent implements OnInit {
   // delegate the event handling to the base class
   handleProductsEvent() {
     this.doTransition(this.appDataStore, AppEvent.products, this.appDataStore.getCurrentState());
-  }
-
-  handleAdminEvent() {
-    this.doTransition(this.appDataStore, AppEvent.admin, this.appDataStore.getCurrentState());
   }
 }

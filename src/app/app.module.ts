@@ -7,7 +7,6 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BaseComponent } from './base/base.component';
 import { LayoutComponent } from './layout/layout.component';
-import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   imports: [
@@ -21,7 +20,6 @@ import { AdminComponent } from './admin/admin.component';
     PageNotFoundComponent,
     BaseComponent,
     LayoutComponent,
-    AdminComponent,
   ],
   bootstrap: [ AppComponent ]
 })

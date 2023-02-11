@@ -27,7 +27,7 @@ export class BaseComponent implements OnInit {
   constructor(protected location: Location, protected router: Router, 
     protected appDataStore: AppDataStoreService) {
     console.log('>> received url: ', router.url);
-    if (router.url !== '/' && router.url !== '/login') {
+    if (router.url !== '/') {
       if (router.getCurrentNavigation()) {
         const navigationExtras = router.getCurrentNavigation()?.extras;
         if (navigationExtras && navigationExtras.state && navigationExtras.state['trsnData']) {
@@ -42,9 +42,14 @@ export class BaseComponent implements OnInit {
             console.log('>> back to the extending component');
           }
         } else {
+          if (router.url === '/home') {
+            // internal 
+            this.appEventModel = this.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN);
+          } else {
           // the user edits the url in the midst of view transitions
           console.log('>> the user accessed an unsupported url: ', router.url);
           router.navigate(['/**']);
+          }
         }
       } else {
         console.log('>> unrecognized navigation: ', router.url);
@@ -76,64 +81,39 @@ export class BaseComponent implements OnInit {
   protected doTransition(appDataStore: AppDataStoreService, appEvent: AppEvent, appState: AppState, appData?: AppData): AppEventModel {
     let appEventModel = new AppEventModel();
 
-    let user = appDataStore.getUser();
+    // Ensure a target path is configured for this event.
+    const path = EventToProcessConfig[appEvent].path;
+    console.log(">> target path: ", path);
+    if (path) {
+      appEventModel.appEvent = appEvent;
+      appEventModel.appState = appState;
+      appEventModel.appData = appData!;
 
-    if (!user || !user.loginId) {
-      user = appData?.user!;
-    }
+      // store the transition data so it an be used to restore a previous transition
+      // This is used to restore a view if the user happens to click the browser's Back button
+      appDataStore.setPreTransitonData({ appEvent, appState, appData: appData ? appData : new AppData() });
 
-    const requiredRoles: string[] = EventToProcessConfig[appEvent].roles;
-    // check for authentication
-    if ((appData && appData.user && appData.user.loginId) || user && user?.loginId) {
-      // authorize the user
-      // if requiredRoles is specified in app-routing.module.ts then check whether the user has the role
-      if (!requiredRoles || (user.role && requiredRoles.includes(user.role))) {
-        // put the user in the store
-        // If a path is configured in state-transition.config.ts for the appState and appEvent.
+      // Call the process to pre-fetch data for the view
+      appEventModel = EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore);
 
-        const path = EventToProcessConfig[appEvent].path;
-        console.log(">> target path: ", path);
-        if (path) {
-          appEventModel.appEvent = appEvent;
-          appEventModel.appState = appState;
-          appEventModel.appData = appData!;
-
-          // store the transition data so it an be used to restore a previous transition
-          // This is used to restore a view if the user happens to click the browser's Back button
-          appDataStore.setPreTransitonData({ appEvent, appState, appData: appData ? appData : new AppData() });
-
-          // Call the process to pre-fetch data for the view
-          appEventModel = EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore);
-
-          // If the process returns a success then route to the path
-          if (appEventModel.appEvent === 'success') {
-            const isNavigated = this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
-            isNavigated.then(res => {
-                if (res) {
-                  appDataStore.setCurrentState(appEventModel.appState);
-                } else {
-                  appDataStore.setCurrentState(AppState.UNKNOWN);
-                }
-            });
+      // If the process returns a success then route to the path
+      if (appEventModel.appEvent === 'success') {
+        const isNavigated = this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
+        isNavigated.then(res => {
+          if (res) {
+            appDataStore.setCurrentState(appEventModel.appState);
           } else {
-            appEventModel.message = { error: "Process Error" };
-            this.router.navigate(['/**'], { state: { trsnData: appEventModel } });
+            appDataStore.setCurrentState(AppState.UNKNOWN);
           }
-
-        } else {
-          console.log(">> path not found: ", appEventModel.appEvent, appEventModel.appState, this.router.url);
-          // Page not found
-          this.router.navigate(['/**']);
-        }
+        });
       } else {
-        console.log(">> athorization error: ", appEvent, appState, this.router.url);
-        // TODO: implement authorization error condition
-        appEventModel.message = { error: 'Authorization error' };
-        this.router.navigate(['/**'], { state: { appEventModel } });
+        appEventModel.message = { error: "Process Error" };
+        this.router.navigate(['/**'], { state: { trsnData: appEventModel } });
       }
+
     } else {
-      console.log(">> user not found: ", appEvent, appState, this.router.url);
-      // TODO: implement login error transition
+      console.log(">> path not found: ", appEventModel.appEvent, appEventModel.appState, this.router.url);
+      // Page not found
       this.router.navigate(['/**']);
     }
 

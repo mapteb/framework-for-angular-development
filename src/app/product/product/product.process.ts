@@ -2,8 +2,6 @@ import { AppEvent } from "../../state-transitions-config/app-events.enum";
 import { AppDataStoreService } from "../../state-transitions-config/app-data-store.service";
 import { AppEventModel } from "../../state-transitions-config/app-event.model";
 import { AppState } from "../../state-transitions-config/app-states.enum";
-import { UserRole } from "src/app/state-transitions-config/user-role.enum";
-
 
 /**
  * This function supports the following state transition:
