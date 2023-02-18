@@ -16,6 +16,5 @@ The development workflow to use this framework in an Angular project are:
 
 Usage of this framework for a small project can be viewed in [StackBlitz](https://stackblitz.com/edit/angular-ivy-glvqom?file=README.md)
 
-A demo of the running application can be viewed [here](https://mapteb.github.io/smart-component-for-angular-projects/home).
 
 Unit tests can be run using the "ng test" command and e2e integration tests can be run using the command "ng e2e".
