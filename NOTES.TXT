@@ -1,0 +1,8 @@
+1. This demo is a running vesion of the repo:
+https://github.com/mapteb/framework-for-angular-development
+
+2. To run the unit and e2e tests download the above repo and run the "ng test" or "ng e2e" commands
+
+3. A demo of a simplified version of the framework is at:
+https://stackblitz.com/edit/angular-ivy-ksa1b1?file=NOTES.TXT
+
