@@ -31,6 +31,7 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
+    console.log(">> Loading products: ");
     this.products = this.appDataStore.getProducts();
   }
 

@@ -17,5 +17,7 @@ export class AdminComponent extends BaseComponent {
     super(location, router, appDataStore);
   }
 
-  override ngOnInit(): void { }
+  override ngOnInit(): void {
+    console.log(">> Loading admin: ");
+  }
 }

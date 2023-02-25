@@ -28,7 +28,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
     super(location, router, appDataStore);
   }
 
-  override ngOnInit(): void {  
+  override ngOnInit(): void {
+    console.log(">> Loading product: ");  
     this.product = this.appDataStore.getProduct(this.appEventModel.appData?.product.id!);
   }
   

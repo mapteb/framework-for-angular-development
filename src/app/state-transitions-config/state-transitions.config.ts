@@ -22,7 +22,7 @@ import { AppState } from './app-states.enum';
  *      
  * 
  * TODO: To support a bookmarked applicationn URL like /products a transition like below can be added
- * UNKNOWN      -> products  -> processProducts()   -> products_success  -> PRODUCTSVIEW   
+ * UNKNOWN      -> products -> processProducts() -> success   -> PRODUCTSVIEW   
 */
 
 /** 

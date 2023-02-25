@@ -32,6 +32,7 @@ export class LayoutComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
+    console.log(">> Loading layout: ");
     // this.currentState$ = this.appDataStore.currentState$;
     // this.user$ = this.appDataStore.user$;
   }

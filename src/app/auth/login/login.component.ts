@@ -26,7 +26,9 @@ export class LoginComponent extends BaseComponent implements OnInit {
     super(location, router, appDataStore);
   }
 
-  override ngOnInit(): void { }
+  override ngOnInit(): void {
+    console.log(">> Loading login: ");
+  }
 
   handleLoginEvent(loginId: string): void {
     const appData = new AppData();

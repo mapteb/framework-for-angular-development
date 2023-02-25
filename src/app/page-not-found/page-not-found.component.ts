@@ -32,6 +32,7 @@ export class PageNotFoundComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
+    console.log(">> Loading pageNotFound: ");
     this.appDataStore.setCurrentState(AppState.UNKNOWN);
     if (!this.message) {
       this.message = 'Unknown access error';
