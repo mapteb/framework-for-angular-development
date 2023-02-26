@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppEvent } from '../../state-transitions-config/app-events.enum';
 import { AppDataStoreService } from '../../state-transitions-config/app-data-store.service';
@@ -15,13 +15,14 @@ import { Product } from '../product.model';
  */
 @Component({
   standalone: true,
+  imports: [CommonModule],
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent extends BaseComponent implements OnInit {
 
-  product!: Product;
+  product: Product | undefined;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {

@@ -17,6 +17,7 @@ import { AppState } from './app-states.enum';
 export class AppDataStoreService {
 
   protected productsStore = new BehaviorSubject<Product[]>([]);
+  protected productsDetailsStore = new BehaviorSubject<Product[]>([]);
   protected productStore = new BehaviorSubject<Product>(new Product());
   protected userStore = new BehaviorSubject<User>(new User('', '', '', ''));
   public user$ = this.userStore.asObservable();
@@ -54,11 +55,16 @@ export class AppDataStoreService {
   }
 
   setProduct(product: Product) {
-    this.productStore.next(product);
+    const productDetails: Product[] = this.productsDetailsStore.getValue();
+    var index = productDetails.findIndex(pd => pd.id === product.id); 
+    if (index === -1) {
+      productDetails.push(product);
+      this.productsDetailsStore.next(productDetails);
+    }
   }
 
-  getProduct(id: number): Product {
-    return this.productStore.getValue();
+  getProduct(id: number): Product | undefined {
+    return this.productsDetailsStore.getValue().find(pd => pd.id === id);
   }
 
   setUser(user: User) {
