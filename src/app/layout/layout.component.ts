@@ -22,8 +22,6 @@ import { User } from '../auth/user.model';
 export class LayoutComponent extends BaseComponent implements OnInit {
 
   title = "A Framework for Angular Development.";
-  currentState$: Observable<AppState>;
-  user$: Observable<User>;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
@@ -33,8 +31,6 @@ export class LayoutComponent extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
     console.log(">> Loading layout: ");
-    // this.currentState$ = this.appDataStore.currentState$;
-    // this.user$ = this.appDataStore.user$;
   }
 
   // a handler for the user raised event
