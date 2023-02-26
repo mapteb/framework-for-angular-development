@@ -21,7 +21,6 @@ import { AppDataStoreService } from '../state-transitions-config/app-data-store.
 export class LayoutComponent extends BaseComponent implements OnInit {
 
   title = "A Framework for Angular Development.";
-  currentState$: Observable<AppState>;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
