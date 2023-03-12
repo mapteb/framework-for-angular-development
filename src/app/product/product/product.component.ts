@@ -31,13 +31,17 @@ export class ProductComponent extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
     console.log(">> Loading product: ");  
-    this.product = this.appDataStore.getProduct(this.appEventModel.appData?.product.id!);
+    // const appEventModel = this.appDataStore.getPreTransitonData();
+    if (this.appEventModel && this.appEventModel.appData.product.id) {
+      console.log(">> Loading product details for id: ", this.appEventModel.appData.product.id);  
+      this.product = this.appDataStore.getProduct(this.appEventModel.appData.product.id);
+    }
   }
   
   // a handler for the user raised event
   // delegates the event to the Smart Component
   // by specifying the event name and current view name
   handlePoductsEvent(path: string) {
-    this.appEventModel = this.doTransition(this.appDataStore, AppEvent.products, AppState.PRODUCTVIEW);
+    this.doTransition(this.appDataStore, AppEvent.products, AppState.PRODUCTVIEW);
   }
 }

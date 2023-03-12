@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
 import { Product } from '../product/product.model';
 import { ProductsService } from '../product/products.service';
 import { AppEventModel } from './app-event.model';
+import { AppEvent } from './app-events.enum';
 import { AppState } from './app-states.enum';
 
 /**
@@ -35,7 +36,7 @@ export class AppDataStoreService {
 
     // used to restore a previous view
   getPreTransitonData(): AppEventModel {
-    return this.preTransitionData.value;
+    return this.preTransitionData.getValue();
   }
 
   setCurrentState(appState: AppState) {
@@ -75,18 +76,16 @@ export class AppDataStoreService {
     return this.userStore.getValue();
   }
 
-  loadProducts() {
-    this.productsService.getProducts().pipe(take(1)).subscribe(res => this.setProducts(res));
+  loadProducts(): Observable<Product[]> {
+    return this.productsService.getProducts();
   }
 
-  loadProduct(id: any) {
-    this.productsService.getProduct(id).pipe(take(1)).subscribe(res => this.setProduct(res));
+  loadProduct(id: number): Observable<Product> {
+    return this.productsService.getProduct(id);
   }
 
-  login(loginId: string) {
-    this.authService.login(loginId).pipe(take(1)).subscribe(res => {
-      this.setUser(res);
-    });
+  login(loginId: string): Observable<User> {
+    return this.authService.login(loginId);
   }
 }
 

@@ -21,6 +21,6 @@ export class AuthService {
     if (loginId === 'admin') {
       return of(new User('admin', '', 'Admin User', UserRole.ADMIN));
     }
-    return of(new User('loginId', '', 'Gnerale User', UserRole.USER));
+    return of(new User(loginId, '', 'Gnerale User', UserRole.USER));
   }
 }

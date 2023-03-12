@@ -1,9 +1,8 @@
+import { Observable, ReplaySubject, Subject } from "rxjs";
 import { homeProcess } from "src/app/home/home.process";
 import { AppDataStoreService } from "src/app/state-transitions-config/app-data-store.service";
 import { AppEventModel } from "src/app/state-transitions-config/app-event.model";
 import { AppEvent } from "src/app/state-transitions-config/app-events.enum";
-import { AppState } from "src/app/state-transitions-config/app-states.enum";
-
 
 /**
  * This function supports the following state transitions:
@@ -18,19 +17,25 @@ import { AppState } from "src/app/state-transitions-config/app-states.enum";
  * @param appDataStore
  * @returns AppEventModel
  */
-export function loginProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): AppEventModel {
+export function loginProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): Observable<AppEvent> {
     const user = appEventModel.appData.user;
-    console.log(">> processing login request for user: ", user);
+    var result = new ReplaySubject<AppEvent>();
+    console.log(">> before login user: ", user);
     if (user && user.loginId) {
-        appDataStore.login(user.loginId);
-        appEventModel.appEvent = AppEvent.success;
-        appEventModel.appState = AppState.LOGINSUCCESS;
-        // internally trigger the "home" event
-        return homeProcess(appEventModel, appDataStore);
+        // TODO: implement login error handling
+        appDataStore.login(user.loginId).subscribe(user => {
+            console.log(">> after login user: ", user);
+            appDataStore.setUser(user);
+            result.next(AppEvent.success);
+            // internally trigger the "home" event
+            // homeProcess(appEventModel, appDataStore).subscribe(homeResult => {
+            //     console.log(">> homeResult: ", homeResult);
+            //     result.next(homeResult);
+            // });
+        });
     } else {
-        // TODO: implement login error
-        appEventModel.appEvent = AppEvent.unknown;
-        appEventModel.appState = AppState.UNKNOWN;
+        result.next(AppEvent.unknown);
     }
-    return appEventModel;
+    console.log(">> returning from login");
+    return result.asObservable();
 }

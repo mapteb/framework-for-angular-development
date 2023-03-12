@@ -3,6 +3,7 @@ import { AppDataStoreService } from "../../state-transitions-config/app-data-sto
 import { AppEventModel } from "../../state-transitions-config/app-event.model";
 import { AppState } from "../../state-transitions-config/app-states.enum";
 import { UserRole } from "src/app/state-transitions-config/user-role.enum";
+import { Observable, of, ReplaySubject } from "rxjs";
 
 
 /**
@@ -19,15 +20,18 @@ import { UserRole } from "src/app/state-transitions-config/user-role.enum";
  * @returns AppEventModel
  */
 export function productProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService):
-        AppEventModel {
+        Observable<AppEvent> {
         console.log(">> processing product request");
-
+        var result = new ReplaySubject<AppEvent>();
         if (appEventModel.appData?.product.id &&
                 appEventModel.appData.product.id > 0) {
-                appDataStore.loadProduct(appEventModel.appData.product.id);
-                appEventModel.appEvent = AppEvent.success;
-                appEventModel.appState = AppState.PRODUCTVIEW;
+                appDataStore.loadProduct(appEventModel.appData.product.id).subscribe(product => {
+                        appDataStore.setProduct(product);
+                        result.next(AppEvent.success);
+                });
+        } else {
+                // TODO: improve error handling
+                result.next(AppEvent.unknown);
         }
-
-        return appEventModel;
+        return result.asObservable();
 }

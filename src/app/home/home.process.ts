@@ -3,6 +3,7 @@ import { AppEvent } from "../state-transitions-config/app-events.enum";
 import { AppState } from "../state-transitions-config/app-states.enum";
 import { AppDataStoreService } from "../state-transitions-config/app-data-store.service";
 import { UserRole } from "../state-transitions-config/user-role.enum";
+import { Observable, of, Subject } from "rxjs";
 
 /**
  * This function supports the following state transitions:
@@ -17,11 +18,7 @@ import { UserRole } from "../state-transitions-config/user-role.enum";
  * @param appDataStore
  * @returns AppEventModel
  */
-export function homeProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): AppEventModel {
+export function homeProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): Observable<AppEvent> {
     console.log(">> processing home request");
-
-    appEventModel.appEvent = AppEvent.success;
-    appEventModel.appState = AppState.HOMEVIEW;
-
-    return appEventModel;
+    return of(AppEvent.success);
 }

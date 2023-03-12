@@ -36,12 +36,18 @@ describe('Unit test each state transition:', () => {
     component = fixture.componentInstance;
   });
 
-  it('GIVEN: LOGINVIEW WHEN: login event triggered THEN: final state is HOMEVIEW', () => {
+  it('GIVEN: LOGINVIEW WHEN: login event triggered THEN: final state is LOGINSUCCESS', () => {
     const appData = new AppData();
     appData.user = new User('admin', '', '', 'ADMIN');
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.login, AppState.LOGINVIEW, appData);
-    expect(appEventModel.appState).toBe(AppState.HOMEVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.LOGINSUCCESS);
+  });
+
+  it('GIVEN: LOGINSUCCESS WHEN: home event triggered THEN: final state is HOMEVIEW', () => {
+    //@ts-ignore
+    const appEventModel = component.doTransition(appDataStore, AppEvent.home, AppState.LOGINSUCCESS);
+    expect(appDataStore.getCurrentState()).toBe(AppState.HOMEVIEW);
   });
 
   it('GIVEN: HOMEVIEW WHEN: products event triggered THEN: final state is PRODUCTSVIEW', () => {
@@ -49,7 +55,7 @@ describe('Unit test each state transition:', () => {
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMEVIEW);
     // const finalState: AppState = appDataStore.getCurrentState();
-    expect(appEventModel.appState).toBe(AppState.PRODUCTSVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSVIEW);
   });
 
   it('GIVEN: PRODUCTSVIEW WHEN: product event triggered THEN: final state is PRODUCTVIEW', () => {
@@ -61,7 +67,7 @@ describe('Unit test each state transition:', () => {
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
     // const finalState: AppState = appDataStore.getCurrentState();
-    expect(appEventModel.appState).toBe(AppState.PRODUCTVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTVIEW);
   });
 
   it('GIVEN: HOMEVIEW WHEN: admin event triggered THEN: final state is ADMINVIEW', () => {
@@ -69,6 +75,6 @@ describe('Unit test each state transition:', () => {
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.admin, appDataStore.getCurrentState());
     const finalState: AppState = appDataStore.getCurrentState();
-    expect(appEventModel.appState).toBe(AppState.ADMINVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.ADMINVIEW);
   });
 });
