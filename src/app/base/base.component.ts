@@ -103,8 +103,9 @@ export class BaseComponent implements OnInit {
         console.log(">> process Result: ", appEvt);
         if (appEvt === AppEvent.success) {
           const appState: AppState = EventToProcessConfig[appEvent]['appState']
+          // save the end state for this transition
           appDataStore.setCurrentState(appState);
-          console.log(">> navTo, resultEvent: ", path, appState);
+          console.log(">> navTo, endState: ", path, appState);
           this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
         } else {
           appEventModel.message = { error: "Process Error" };

@@ -28,8 +28,9 @@ import { AppState } from './app-states.enum';
 /** 
  * This const configures the process that should be triggered when a pre-event is raised.
  * the homeProcess, productsProcess, and productProcess are imported functions.
- * These functions pre-fetch data. When these functions complete and return success,
- * the request will be forwarded to the path URL configured. Although this functionality
+ * When the process returns success the end state is appState. The path property
+ * specifies the url fo the view which loads the data pre-fetched by the process.
+ * Although this functionality
  * could be accomplished in app-routing.module.ts
  * using resolve and data properties, this configuration in conjunction with the doTransition method in the
  * base.component.ts enables  some simplifications in creating unit test scripts
