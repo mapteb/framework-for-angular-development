@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppData } from '../state-transitions-config/app-data.model';
 import { AppEventModel } from '../state-transitions-config/app-event.model';
 import { AppEvent } from '../state-transitions-config/app-events.enum';
@@ -36,15 +36,19 @@ export class BaseComponent implements OnInit {
             const aem = appDataStore.getPreTransitonData();
             console.log('>> user clicked browser Back button, restore the view');
             // the user clicked browser Back button, restore the view
-            this.appEventModel = this.doTransition(appDataStore, aem.appEvent, aem.appState, aem.appData);
+            this.doTransition(appDataStore, aem.appEvent, aem.appState, aem.appData);
           } else {
-            console.log('>> process function has already been called');
-            console.log('>> back to the extending component');
+            if (router.url === '/home') {
+              this.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN);
+            } else {
+              console.log('>> process function has already been called');
+              console.log('>> back to the extending component');
+            }
           }
         } else {
           if (router.url === '/home') {
             // internal 
-            this.appEventModel = this.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN);
+            this.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN);
           } else {
           // the user edits the url in the midst of view transitions
           console.log('>> the user accessed an unsupported url: ', router.url);
@@ -78,10 +82,10 @@ export class BaseComponent implements OnInit {
    * @param appData 
    * @returns AppEventModel
    */
-  protected doTransition(appDataStore: AppDataStoreService, appEvent: AppEvent, appState: AppState, appData?: AppData): AppEventModel {
+  protected doTransition(appDataStore: AppDataStoreService, appEvent: AppEvent, appState: AppState, appData?: AppData): void {
     let appEventModel = new AppEventModel();
 
-    // Ensure a target path is configured for this event.
+    // If a path is configured in state-transition.config.ts for the appState and appEvent.
     const path = EventToProcessConfig[appEvent].path;
     console.log(">> target path: ", path);
     if (path) {
@@ -94,29 +98,19 @@ export class BaseComponent implements OnInit {
       appDataStore.setPreTransitonData({ appEvent, appState, appData: appData ? appData : new AppData() });
 
       // Call the process to pre-fetch data for the view
-      appEventModel = EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore);
-
-      // If the process returns a success then route to the path
-      if (appEventModel.appEvent === 'success') {
-        const isNavigated = this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
-        isNavigated.then(res => {
-          if (res) {
-            appDataStore.setCurrentState(appEventModel.appState);
-          } else {
-            appDataStore.setCurrentState(AppState.UNKNOWN);
-          }
-        });
-      } else {
-        appEventModel.message = { error: "Process Error" };
-        this.router.navigate(['/**'], { state: { trsnData: appEventModel } });
-      }
-
-    } else {
-      console.log(">> path not found: ", appEventModel.appEvent, appEventModel.appState, this.router.url);
-      // Page not found
-      this.router.navigate(['/**']);
+      console.log(">> calling processor...");
+      EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore).subscribe((appEvt) => {
+        console.log(">> process Result: ", appEvt);
+        if (appEvt === AppEvent.success) {
+          const appState: AppState = EventToProcessConfig[appEvent]['appState']
+          appDataStore.setCurrentState(appState);
+          console.log(">> navTo, resultEvent: ", path, appState);
+          this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
+        } else {
+          appEventModel.message = { error: "Process Error" };
+          this.router.navigate(['/**'], { state: { trsnData: appEventModel } });
+        }
+      });
     }
-
-    return appEventModel;
-  }
+ }
 }

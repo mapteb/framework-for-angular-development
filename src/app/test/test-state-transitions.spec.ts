@@ -32,27 +32,29 @@ describe('Unit test each state transition:', () => {
     component = fixture.componentInstance;
   });
 
-  it('GIVEN: UNKNOWN state WHEN: home event triggered THEN: final state is HOMEVIEW', () => {
-    const appData = new AppData();
+  it('GIVEN: UNKNOWN WHEN: home event triggered THEN: final state is HOMEVIEW', () => {
     //@ts-ignore
-    const appEventModel = component.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN, appData);
-    expect(appEventModel.appState).toBe(AppState.HOMEVIEW);
+    const appEventModel = component.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN);
+    expect(appDataStore.getCurrentState()).toBe(AppState.HOMEVIEW);
   });
 
   it('GIVEN: HOMEVIEW WHEN: products event triggered THEN: final state is PRODUCTSVIEW', () => {
     console.log(">> is homeview: ", appDataStore.getCurrentState());
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMEVIEW);
-    expect(appEventModel.appState).toBe(AppState.PRODUCTSVIEW);
+    // const finalState: AppState = appDataStore.getCurrentState();
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSVIEW);
   });
 
   it('GIVEN: PRODUCTSVIEW WHEN: product event triggered THEN: final state is PRODUCTVIEW', () => {
+    console.log(">> is productsview: ", appDataStore.getCurrentState());
     const appData = new AppData();
     const product = new Product(1);
     appData.product = product;
 
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
-    expect(appEventModel.appState).toBe(AppState.PRODUCTVIEW);
+    // const finalState: AppState = appDataStore.getCurrentState();
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTVIEW);
   });
 });

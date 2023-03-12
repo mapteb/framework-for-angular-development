@@ -4,11 +4,10 @@
  * 
  */
 export enum AppEvent {
-    login = "login",
+    unknown = "unknown",
     home = "home",
     products = "products",
     product = "product",
     admin = "admin",
-    unknown = "unknown",
     success = "success"
 }

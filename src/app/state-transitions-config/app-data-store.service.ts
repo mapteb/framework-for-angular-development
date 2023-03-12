@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Product } from '../product/product.model';
 import { ProductsService } from '../product/products.service';
 import { AppEventModel } from './app-event.model';
@@ -31,7 +30,7 @@ export class AppDataStoreService {
 
     // used to restore a previous view
   getPreTransitonData(): AppEventModel {
-    return this.preTransitionData.value;
+    return this.preTransitionData.getValue();
   }
 
   setCurrentState(appState: AppState) {
@@ -63,12 +62,12 @@ export class AppDataStoreService {
     return this.productsDetailsStore.getValue().find(pd => pd.id === id);
   }
 
-  loadProducts() {
-    this.productsService.getProducts().pipe(take(1)).subscribe(res => this.setProducts(res));
+  loadProducts(): Observable<Product[]> {
+    return this.productsService.getProducts();
   }
 
-  loadProduct(id: any) {
-    this.productsService.getProduct(id).pipe(take(1)).subscribe(res => this.setProduct(res));
+  loadProduct(id: number): Observable<Product> {
+    return this.productsService.getProduct(id);
   }
 }
 

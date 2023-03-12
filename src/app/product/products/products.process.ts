@@ -1,7 +1,7 @@
 import { AppEventModel } from "../../state-transitions-config/app-event.model";
 import { AppEvent } from "../../state-transitions-config/app-events.enum";
-import { AppState } from "../../state-transitions-config/app-states.enum";
 import { AppDataStoreService } from "../../state-transitions-config/app-data-store.service";
+import { Observable, ReplaySubject } from "rxjs";
 
 /**
  * This function supports the following state transitions
@@ -15,12 +15,13 @@ import { AppDataStoreService } from "../../state-transitions-config/app-data-sto
  * 
 */
 export function productsProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService):
-        AppEventModel {
+        Observable<AppEvent> {
         console.log(">> processing products request");
-
-        appDataStore.loadProducts();
-        appEventModel.appEvent = AppEvent.success;
-        appEventModel.appState = AppState.PRODUCTSVIEW;
-
-        return appEventModel;
+        var result = new ReplaySubject<AppEvent>();
+        // TODO: implement loadProducts error handling
+        appDataStore.loadProducts().subscribe(products => {
+                appDataStore.setProducts(products);
+                result.next(AppEvent.success);
+        });
+        return result.asObservable();
 }

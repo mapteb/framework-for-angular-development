@@ -31,6 +31,7 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
+    console.log(">> Loading products: ");
     this.products = this.appDataStore.getProducts();
   }
 
@@ -40,6 +41,6 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   handlePoductEvent(productId: any) {
     const appData = new AppData();
     appData.product.id = productId;
-    this.appEventModel = this.doTransition(this.appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
+    this.doTransition(this.appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
   }
 }

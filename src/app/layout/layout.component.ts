@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { BaseComponent } from '../base/base.component';
 import { AppEvent } from '../state-transitions-config/app-events.enum';
-import { AppState } from '../state-transitions-config/app-states.enum';
 import { AppDataStoreService } from '../state-transitions-config/app-data-store.service';
 
 /**
@@ -29,6 +27,7 @@ export class LayoutComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
+    console.log(">> Loading layout: ");
   }
 
   // a handler for the user raised event
