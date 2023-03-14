@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
@@ -76,16 +76,31 @@ export class AppDataStoreService {
     return this.userStore.getValue();
   }
 
-  loadProducts(): Observable<Product[]> {
-    return this.productsService.getProducts();
+  // TODO: needs error handling
+  loadProducts(): Observable<AppEvent> {
+    var result = new ReplaySubject<AppEvent>();
+    this.productsService.getProducts().subscribe(products => {
+      this.setProducts(products);
+      result.next(AppEvent.success);});
+    return result;
   }
 
-  loadProduct(id: number): Observable<Product> {
-    return this.productsService.getProduct(id);
+  // TODO: needs error handling
+  loadProduct(id: number): Observable<AppEvent> {
+    var result = new ReplaySubject<AppEvent>();
+    this.productsService.getProduct(id).subscribe(product => {
+      this.setProduct(product);
+      result.next(AppEvent.success);});
+    return result;
   }
 
-  login(loginId: string): Observable<User> {
-    return this.authService.login(loginId);
+  // TODO: needs error handling
+  login(loginId: string): Observable<AppEvent> {
+    var result = new ReplaySubject<AppEvent>();
+    this.authService.login(loginId).subscribe(user => {
+      this.setUser(user);
+      result.next(AppEvent.success);});
+    return result;
   }
 }
 

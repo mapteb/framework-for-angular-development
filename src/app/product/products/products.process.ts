@@ -20,11 +20,5 @@ import { Observable, ReplaySubject } from "rxjs";
 export function productsProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService):
         Observable<AppEvent> {
         console.log(">> processing products request");
-        var result = new ReplaySubject<AppEvent>();
-        // TODO: implement loadProducts error handling
-        appDataStore.loadProducts().subscribe(products => {
-                appDataStore.setProducts(products);
-                result.next(AppEvent.success);
-        });
-        return result.asObservable();
+        return appDataStore.loadProducts();
 }
