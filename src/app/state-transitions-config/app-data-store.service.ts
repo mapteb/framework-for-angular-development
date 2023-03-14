@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { Product } from '../product/product.model';
 import { ProductsService } from '../product/products.service';
 import { AppEventModel } from './app-event.model';
+import { AppEvent } from './app-events.enum';
 import { AppState } from './app-states.enum';
 
 /**
@@ -62,12 +63,22 @@ export class AppDataStoreService {
     return this.productsDetailsStore.getValue().find(pd => pd.id === id);
   }
 
-  loadProducts(): Observable<Product[]> {
-    return this.productsService.getProducts();
+  // TODO: needs error handling
+  loadProducts(): Observable<AppEvent> {
+    var result = new ReplaySubject<AppEvent>();
+    this.productsService.getProducts().subscribe(products => {
+      this.setProducts(products);
+      result.next(AppEvent.success);});
+    return result;
   }
 
-  loadProduct(id: number): Observable<Product> {
-    return this.productsService.getProduct(id);
+  // TODO: needs error handling
+  loadProduct(id: number): Observable<AppEvent> {
+    var result = new ReplaySubject<AppEvent>();
+    this.productsService.getProduct(id).subscribe(product => {
+      this.setProduct(product);
+      result.next(AppEvent.success);});
+    return result;
   }
 }
 
