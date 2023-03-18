@@ -4,17 +4,11 @@ import { AppDataStoreService } from "../state-transitions-config/app-data-store.
 import { Observable, of, Subject } from "rxjs";
 
 /**
- * This function supports the following state transitions:
- * 
- *  LOGINSUCCESS  -> home     -> processHome()     -> success     -> HOMEVIEW
- * 
- *  This function also enforces the user role required to process the request
- * 
- *  * TODO: need to add a new transition for home_error
+ * This function pre-fetches data for the home page
  * 
  * @param appEventModel 
  * @param appDataStore
- * @returns AppEventModel
+ * @returns Observable<AppEvent>
  */
 export function homeProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): Observable<AppEvent> {
     console.log(">> processing home request");

@@ -22,7 +22,7 @@ import { Product } from '../product.model';
 })
 export class ProductComponent extends BaseComponent implements OnInit {
 
-  product: Product | undefined;
+  product: Product | null | undefined;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
@@ -42,6 +42,6 @@ export class ProductComponent extends BaseComponent implements OnInit {
   // delegates the event to the Smart Component
   // by specifying the event name and current view name
   handlePoductsEvent(path: string) {
-    this.doTransition(this.appDataStore, AppEvent.products, AppState.PRODUCTVIEW);
+    this.doTransition(this.appDataStore, AppEvent.products, AppState.PRODUCTSSUCCESS);
   }
 }

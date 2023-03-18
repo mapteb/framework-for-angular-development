@@ -23,7 +23,7 @@ import { Product } from '../product.model';
 })
 export class ProductsComponent extends BaseComponent implements OnInit {
 
-  products: Product[] = [];
+  products: Product[] | null = [];
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
@@ -41,6 +41,6 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   handlePoductEvent(productId: any) {
     const appData = new AppData();
     appData.product.id = productId;
-    this.doTransition(this.appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
+    this.doTransition(this.appDataStore, AppEvent.product, AppState.PRODUCTSSUCCESS, appData);
   }
 }

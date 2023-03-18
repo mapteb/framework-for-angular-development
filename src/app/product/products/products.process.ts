@@ -4,16 +4,12 @@ import { AppDataStoreService } from "../../state-transitions-config/app-data-sto
 import { Observable } from "rxjs";
 
 /**
- * This function supports the following state transitions
+ * This function pre-fetches data for the products page
  * 
- * HOMEVIEW      -> products -> processProducts() -> products_success -> PRODUCTSVIEW
- * PRODUCTVIEW   -> products -> processProducts() -> products_success -> PRODUCTSVIEW
- * 
- * Pre-fetches data for the view.
- * 
- * TODO: Need to add new transitions for error events like products error
- * 
-*/
+ * @param appEventModel 
+ * @param appDataStore
+ * @returns Observable<AppEvent>
+ */
 export function productsProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService):
         Observable<AppEvent> {
         console.log(">> processing products request");

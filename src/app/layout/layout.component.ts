@@ -41,4 +41,8 @@ export class LayoutComponent extends BaseComponent implements OnInit {
   handleProductsEvent() {
     this.doTransition(this.appDataStore, AppEvent.products, this.appDataStore.getCurrentState());
   }
+
+  handleAdminEvent() {
+    this.doTransition(this.appDataStore, AppEvent.admin, this.appDataStore.getCurrentState());
+  }
 }

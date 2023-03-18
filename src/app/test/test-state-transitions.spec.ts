@@ -32,29 +32,29 @@ describe('Unit test each state transition:', () => {
     component = fixture.componentInstance;
   });
 
-  it('GIVEN: UNKNOWN WHEN: home event triggered THEN: final state is HOMEVIEW', () => {
+  it('GIVEN: UNKNOWN WHEN: home event triggered THEN: final state is HOMESUCCESS', () => {
     //@ts-ignore
-    const appEventModel = component.doTransition(appDataStore, AppEvent.home, AppState.UNKNOWN);
-    expect(appDataStore.getCurrentState()).toBe(AppState.HOMEVIEW);
+    const appEventModel = component.doTransition(appDataStore, AppEvent.home, AppState.LOGINSUCCESS);
+    expect(appDataStore.getCurrentState()).toBe(AppState.HOMESUCCESS);
   });
 
-  it('GIVEN: HOMEVIEW WHEN: products event triggered THEN: final state is PRODUCTSVIEW', () => {
+  it('GIVEN: HOMESUCCESS WHEN: products event triggered THEN: final state is PRODUCTSSUCCESS', () => {
     console.log(">> is homeview: ", appDataStore.getCurrentState());
     //@ts-ignore
-    const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMEVIEW);
+    const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMESUCCESS);
     // const finalState: AppState = appDataStore.getCurrentState();
-    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSSUCCESS);
   });
 
-  it('GIVEN: PRODUCTSVIEW WHEN: product event triggered THEN: final state is PRODUCTVIEW', () => {
+  it('GIVEN: PRODUCTSSUCCESS WHEN: product event triggered THEN: final state is PRODUCTSUCCESS', () => {
     console.log(">> is productsview: ", appDataStore.getCurrentState());
     const appData = new AppData();
     const product = new Product(1);
     appData.product = product;
 
     //@ts-ignore
-    const appEventModel = component.doTransition(appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
+    const appEventModel = component.doTransition(appDataStore, AppEvent.product, AppState.PRODUCTSSUCCESS, appData);
     // const finalState: AppState = appDataStore.getCurrentState();
-    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSUCCESS);
   });
 });

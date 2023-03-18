@@ -1,8 +1,8 @@
 <section class="leftm2">
   <h2 class="title">Fancy Products Store</h2>
   <section *ngIf="(appDataStore.currentState$ | async) !== 'UNKNOWN'">
-    <button (click)="handleHomeEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'HOMEVIEW'">Home</button>
-    <button (click)="handleProductsEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'PRODUCTSVIEW'">Products</button>
+    <button (click)="handleHomeEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'HOMESUCCESS'">Home</button>
+    <button (click)="handleProductsEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'PRODUCTSSUCCESS'">Products</button>
   </section>
   <hr>
 </section>
