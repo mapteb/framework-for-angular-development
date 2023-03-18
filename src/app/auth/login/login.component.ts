@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from 'src/app/base/base.component';
 import { AppDataStoreService } from 'src/app/state-transitions-config/app-data-store.service';
@@ -7,6 +7,7 @@ import { AppData } from 'src/app/state-transitions-config/app-data.model';
 import { AppEvent } from 'src/app/state-transitions-config/app-events.enum';
 import { AppState } from 'src/app/state-transitions-config/app-states.enum';
 import { User } from '../user.model';
+import { Observable } from 'rxjs';
 
 
 /**
@@ -16,10 +17,14 @@ import { User } from '../user.model';
  * to pre-fetch any data needed for this HomeComponent.
  */
 @Component({
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-home',
   templateUrl: './login.component.html'
 })
 export class LoginComponent extends BaseComponent implements OnInit {
+
+  errorMsg$: Observable<string>;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
@@ -28,6 +33,9 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   override ngOnInit(): void {
     console.log(">> Loading login: ");
+    // if (this.appDataStore.getCurrentState() === AppState.ERRORSTATE) {
+    //   this.errorMsg$ = this.appDataStore.message$;
+    // }
   }
 
   handleLoginEvent(loginId: string): void {

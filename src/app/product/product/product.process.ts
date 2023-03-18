@@ -7,21 +7,15 @@ import { Observable, of, ReplaySubject } from "rxjs";
 
 
 /**
- * This function supports the following state transition:
- * 
- *   PRODUCTSVIEW  -> product  -> processProduct()  -> product_success  -> PRODUCTVIEW
- * 
- * Pre-fetches data for the view
- * 
- * TODO: need to ad a new transition for product error
+ * This function pre-fetches data for the product page
  * 
  * @param appEventModel 
- * @param appDataStore 
- * @returns AppEventModel
+ * @param appDataStore
+ * @returns Observable<AppEvent>
  */
 export function productProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService):
         Observable<AppEvent> {
-        console.log(">> processing product request");
+        console.log(">> processing product details request for id: ", appEventModel.appData?.product?.id);
 
-        return appDataStore.loadProduct(appEventModel.appData?.product?.id!);
+        return appDataStore.loadProduct(appEventModel.appData?.product?.id);
 }

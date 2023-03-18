@@ -16,16 +16,16 @@ import { AppState } from './app-states.enum';
  * here but can be easily added as aditional transitions
  * 
   -----------------------------------------------------------------------------------
-  LOGINVIEW     -> login    -> processLogin()    -> success    -> LOGINSUCCESS
-  LOGINSUCCESS  -> home     -> processHome()     -> success    -> HOMEVIEW
-  HOMEVIEW      -> products -> processProducts() -> success    -> PRODUCTSVIEW
-  PRODUCTSVIEW  -> product  -> processProduct()  -> success    -> PRODUCTVIEW
-  HOMEVIEW      -> admin    -> processAdmin()    -> success    -> ADMINVIEW
+  LOGINVIEW        -> login    -> processLogin()    -> success    -> LOGINSUCCESS
+  LOGINSUCCESS     -> home     -> processHome()     -> success    -> HOMESUCCESS
+  HOMESUCCESS      -> products -> processProducts() -> success    -> PRODUCTSSUCCESS
+  PRODUCTSSUCCESS  -> product  -> processProduct()  -> success    -> PRODUCTSUCCESS
+  HOMESUCCESS      -> admin    -> processAdmin()    -> success    -> ADMINSUCCESS
   -----------------------------------------------------------------------------------
  *      
  * 
  * TODO: To support a bookmarked applicationn URL like /products a transition like below can be added
- * UNKNOWN      -> products -> processProducts() -> success   -> PRODUCTSVIEW   
+ * UNKNOWN      -> products -> processProducts() -> success   -> PRODUCTSSUCCESS   
 */
 
 /** 
@@ -38,9 +38,9 @@ import { AppState } from './app-states.enum';
  * (See: test-state-transitions.spec.ts)
  */
 export const EventToProcessConfig = {
-    login: { roles: undefined, process: loginProcess, appState: AppState.LOGINSUCCESS, path: "/home"  },
-    home: { roles: ['USER', 'ADMIN'], process: homeProcess, appState: AppState.HOMEVIEW, path: "/home" },
-    products: { roles: ['USER', 'ADMIN'], process: productsProcess, appState: AppState.PRODUCTSVIEW, path: "/products" },
-    product: { roles: ['USER', 'ADMIN'], process: productProcess, appState: AppState.PRODUCTVIEW, path: "/products/product" },
-    admin: { roles: ['ADMIN'], process: adminProcess, appState: AppState.ADMINVIEW, path: "/admin" }
-} as {[id: string]: { roles: string[] | undefined; process: (appEventModel: AppEventModel, appDataStore: AppDataStoreService) => Observable<AppEvent>; appState: AppState; path: string; }};
+    login: { roles: undefined, process: loginProcess, path: "/home"  },
+    home: { roles: ['USER', 'ADMIN'], process: homeProcess, path: "/home" },
+    products: { roles: ['USER', 'ADMIN'], process: productsProcess, path: "/products" },
+    product: { roles: ['USER', 'ADMIN'], process: productProcess, path: "/products/product" },
+    admin: { roles: ['ADMIN'], process: adminProcess, path: "/admin" }
+} as {[id: string]: { roles: string[] | undefined; process: (appEventModel: AppEventModel, appDataStore: AppDataStoreService) => Observable<AppEvent>; path: string; }};

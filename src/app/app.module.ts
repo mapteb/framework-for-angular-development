@@ -8,12 +8,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { BaseComponent } from './base/base.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AdminComponent } from './admin/admin.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule
   ],
   declarations: [
     AppComponent,

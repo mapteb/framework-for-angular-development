@@ -5,10 +5,12 @@
  */
 export enum AppEvent {
     login = "login",
+    login_error = "login_error",
     home = "home",
     products = "products",
     product = "product",
     admin = "admin",
     unknown = "unknown",
-    success = "success"
+    success = "success",
+    error = "error"
 }

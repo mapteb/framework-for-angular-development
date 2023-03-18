@@ -5,17 +5,11 @@ import { AppEventModel } from "src/app/state-transitions-config/app-event.model"
 import { AppEvent } from "src/app/state-transitions-config/app-events.enum";
 
 /**
- * This function supports the following state transitions:
- * 
- *  LOGINVIEW    -> login  -> processLogin()  -> success  -> LOGINSUCCESS
- *  LOGINSUCCESS -> home   -> processHome()   -> success  -> HOMEVIEW
- * 
- * 
- *  * TODO: need to add a new transition for login error
+ * This function pre-fetches data for the login page
  * 
  * @param appEventModel 
  * @param appDataStore
- * @returns AppEventModel
+ * @returns Observable<AppEvent>
  */
 export function loginProcess(appEventModel: AppEventModel, appDataStore: AppDataStoreService): Observable<AppEvent> {
     const user = appEventModel.appData.user;
@@ -23,5 +17,5 @@ export function loginProcess(appEventModel: AppEventModel, appDataStore: AppData
     console.log(">> before login user: ", user);
 
     // TODO: implement login error handling
-    return appDataStore.login(user.loginId);
+    return appDataStore.login(user?.loginId);
 }

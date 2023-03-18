@@ -36,45 +36,53 @@ describe('Unit test each state transition:', () => {
     component = fixture.componentInstance;
   });
 
-  it('GIVEN: LOGINVIEW WHEN: login event triggered THEN: final state is LOGINSUCCESS', () => {
+  it('GIVEN: LOGINVIEW and loginId=admin WHEN: login event triggered THEN: final state is LOGINSUCCESS', () => {
     const appData = new AppData();
-    appData.user = new User('admin', '', '', 'ADMIN');
+    appData.user = new User('admin', '', '', '');
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.login, AppState.LOGINVIEW, appData);
     expect(appDataStore.getCurrentState()).toBe(AppState.LOGINSUCCESS);
   });
 
-  it('GIVEN: LOGINSUCCESS WHEN: home event triggered THEN: final state is HOMEVIEW', () => {
+  it('GIVEN: LOGINVIEW and loginId=erroruser WHEN login event triggered THEN: final state is LOGINERROR', () => {
+    const appData = new AppData();
+    appData.user = new User('erroruser', '', '', '');
+    //@ts-ignore
+    const appEventModel = component.doTransition(appDataStore, AppEvent.login, AppState.LOGINVIEW, appData);
+    expect(appDataStore.getCurrentState()).toBe(AppState.LOGINERROR);
+  });
+
+  it('GIVEN: LOGINSUCCESS WHEN: home event triggered THEN: final state is HOMESUCCESS', () => {
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.home, AppState.LOGINSUCCESS);
-    expect(appDataStore.getCurrentState()).toBe(AppState.HOMEVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.HOMESUCCESS);
   });
 
-  it('GIVEN: HOMEVIEW WHEN: products event triggered THEN: final state is PRODUCTSVIEW', () => {
+  it('GIVEN: HOMESUCCESS WHEN: products event triggered THEN: final state is PRODUCTSSUCCESS', () => {
     console.log(">> is homeview: ", appDataStore.getCurrentState());
     //@ts-ignore
-    const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMEVIEW);
+    const appEventModel = component.doTransition(appDataStore, AppEvent.products, AppState.HOMESUCCESS);
     // const finalState: AppState = appDataStore.getCurrentState();
-    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSSUCCESS);
   });
 
-  it('GIVEN: PRODUCTSVIEW WHEN: product event triggered THEN: final state is PRODUCTVIEW', () => {
+  it('GIVEN: PRODUCTSSUCCESS WHEN: product event triggered THEN: final state is PRODUCTSUCCESS', () => {
     console.log(">> is productsview: ", appDataStore.getCurrentState());
     const appData = new AppData();
     const product = new Product(1);
     appData.product = product;
 
     //@ts-ignore
-    const appEventModel = component.doTransition(appDataStore, AppEvent.product, AppState.PRODUCTSVIEW, appData);
+    const appEventModel = component.doTransition(appDataStore, AppEvent.product, AppState.PRODUCTSSUCCESS, appData);
     // const finalState: AppState = appDataStore.getCurrentState();
-    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.PRODUCTSUCCESS);
   });
 
-  it('GIVEN: HOMEVIEW WHEN: admin event triggered THEN: final state is ADMINVIEW', () => {
+  it('GIVEN: HOMESUCCESS WHEN: admin event triggered THEN: final state is ADMINSUCCESS', () => {
     console.log(">> is homeview: ", appDataStore.getCurrentState());
     //@ts-ignore
     const appEventModel = component.doTransition(appDataStore, AppEvent.admin, appDataStore.getCurrentState());
     const finalState: AppState = appDataStore.getCurrentState();
-    expect(appDataStore.getCurrentState()).toBe(AppState.ADMINVIEW);
+    expect(appDataStore.getCurrentState()).toBe(AppState.ADMINSUCCESS);
   });
 });

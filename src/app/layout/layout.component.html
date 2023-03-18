@@ -1,8 +1,8 @@
 <section class="leftm2">
   <h2 class="title">Fancy Products Store</h2>
-  <section *ngIf="(appDataStore.currentState$ | async) !== 'UNKNOWN'">
-    <button (click)="handleHomeEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'HOMEVIEW'">Home</button>
-    <button (click)="handleProductsEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'PRODUCTSVIEW'">Products</button>
+  <section *ngIf="(appDataStore.currentState$ | async) !== 'UNKNOWN' && (appDataStore.currentState$ | async) !== 'LOGINVIEW'">
+    <button (click)="handleHomeEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'HOMESUCCESS'">Home</button>
+    <button (click)="handleProductsEvent()" class="mrgn1" [disabled]="(appDataStore.currentState$ | async) === 'PRODUCTSSUCCESS'">Products</button>
     <button *ngIf="(appDataStore.user$ | async)?.role === 'ADMIN' ? true : false" (click)="handleAdminEvent()" class="mrgn1">Admin</button>
   </section>
   <hr>

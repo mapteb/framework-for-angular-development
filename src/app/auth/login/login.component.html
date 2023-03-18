@@ -1,4 +1,10 @@
-<p>Login - Admin users enter admin, others enter foo, bar, etc.</p>
 
+<div>Admin users enter <var>admin</var>, others enter <var>foo, bar</var>, etc. <br>
+    To test error handling use <var>erroruser</var>
+</div>
+<br>
+<div class="errormsg">
+    {{ appDataStore.message$ | async }}
+</div>
 <input #loginId id="loginId" name="loginId" > &nbsp;
 <button (click)="handleLoginEvent(loginId.value)">Login</button>

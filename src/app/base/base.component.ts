@@ -81,6 +81,7 @@ export class BaseComponent implements OnInit {
     let appEventModel = new AppEventModel();
 
     var user = appDataStore.getUser();
+    var curPath = this.router.url;
 
     // if (!user || !user.loginId) {
     //   user = appData?.user;
@@ -93,7 +94,7 @@ export class BaseComponent implements OnInit {
       const requiredRoles: string[] | undefined = EventToProcessConfig[appEvent].roles;
       // authorize the user
       // if requiredRoles is specified in app-routing.module.ts then check whether the user has the role
-      if (!requiredRoles || (user.role && requiredRoles.includes(user.role))) {
+      if (!requiredRoles || (user?.role && requiredRoles.includes(user.role))) {
         // put the user in the store
         // If a path is configured in state-transition.config.ts for the appState and appEvent.
 
@@ -110,16 +111,16 @@ export class BaseComponent implements OnInit {
 
           // Call the process to pre-fetch data for the view
           console.log(">> calling processor...");
-          EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore).subscribe((appEvt) => {
-            console.log(">> process Result: ", appEvt);
-            if (appEvt === AppEvent.success) {
-              const appState: AppState = EventToProcessConfig[appEvent]['appState']
-              appDataStore.setCurrentState(appState);
+          EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore).subscribe((finalEvt) => {
+            // construct a final state like LOGINERROR
+            const finalState = (appEvent + finalEvt).toUpperCase();
+            appDataStore.setCurrentState(AppState[finalState as keyof typeof AppState]);
+            if (finalEvt === AppEvent.success) {
               console.log(">> navTo, resultEvent: ", path, appState);
               this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
             } else {
-              appEventModel.message = { error: "Process Error" };
-              this.router.navigate(['/**'], { state: { trsnData: appEventModel } });
+              // process error, send the user back to the same page
+              console.log(">> process Result: navTo: ", finalEvt, curPath);
             }
           });
       } else {
