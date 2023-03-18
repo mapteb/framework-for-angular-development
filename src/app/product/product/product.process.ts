@@ -1,9 +1,7 @@
 import { AppEvent } from "../../state-transitions-config/app-events.enum";
 import { AppDataStoreService } from "../../state-transitions-config/app-data-store.service";
 import { AppEventModel } from "../../state-transitions-config/app-event.model";
-import { AppState } from "../../state-transitions-config/app-states.enum";
-import { UserRole } from "src/app/state-transitions-config/user-role.enum";
-import { Observable, of, ReplaySubject } from "rxjs";
+import { Observable } from "rxjs";
 
 
 /**

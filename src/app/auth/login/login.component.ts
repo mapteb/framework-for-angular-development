@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BaseComponent } from 'src/app/base/base.component';
-import { AppDataStoreService } from 'src/app/state-transitions-config/app-data-store.service';
-import { AppData } from 'src/app/state-transitions-config/app-data.model';
-import { AppEvent } from 'src/app/state-transitions-config/app-events.enum';
-import { AppState } from 'src/app/state-transitions-config/app-states.enum';
+import { Router } from '@angular/router';
+import { BaseComponent } from '../../base/base.component';
+import { AppDataStoreService } from '../../state-transitions-config/app-data-store.service';
+import { AppData } from '../../state-transitions-config/app-data.model';
+import { AppEvent } from '../../state-transitions-config/app-events.enum';
+import { AppState } from '../../state-transitions-config/app-states.enum';
 import { User } from '../user.model';
 import { Observable } from 'rxjs';
 

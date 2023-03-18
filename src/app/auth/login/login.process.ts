@@ -1,8 +1,7 @@
-import { Observable, ReplaySubject, Subject } from "rxjs";
-import { homeProcess } from "src/app/home/home.process";
-import { AppDataStoreService } from "src/app/state-transitions-config/app-data-store.service";
-import { AppEventModel } from "src/app/state-transitions-config/app-event.model";
-import { AppEvent } from "src/app/state-transitions-config/app-events.enum";
+import { Observable } from "rxjs";
+import { AppDataStoreService } from "../../state-transitions-config/app-data-store.service";
+import { AppEventModel } from "../../state-transitions-config/app-event.model";
+import { AppEvent } from "../../state-transitions-config/app-events.enum";
 
 /**
  * This function pre-fetches data for the login page
