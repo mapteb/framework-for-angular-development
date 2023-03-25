@@ -7,7 +7,6 @@ export enum AppEvent {
     home = "home",
     products = "products",
     product = "product",
-    admin = "admin",
     unknown = "unknown",
     success = "success",
 }

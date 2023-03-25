@@ -16,7 +16,6 @@ import { AppEvent } from './app-events.enum';
   UNKNOWN          -> home     -> processHome()     -> success    -> HOMESUCCESS
   HOMESUCCESS      -> products -> processProducts() -> success    -> PRODUCTSSUCCESS
   PRODUCTSSUCCESS  -> product  -> processProduct()  -> success    -> PRODUCTSUCCESS
-  HOMESUCCESS      -> admin    -> processAdmin()    -> success    -> ADMINSUCCESS
   -----------------------------------------------------------------------------------
  *      
  * 
@@ -26,7 +25,7 @@ import { AppEvent } from './app-events.enum';
 
 /** 
  * This const configures the process that should be triggered when a pre-event is raised.
- * the loginProcess, homeProcess, productsProcess, productProcess and adminProcess are imported functions.
+ * the homeProcess, productsProcess, and productProcess are imported functions.
  * These functions pre-fetch data. When these functions complete and return success the request will be forwarded to 
  * the path URL configured. Although this functionality could be accomplished in app-routing.module.ts
  * using resolve and data properties, this configuration in conjunction with the doTransition method in the
@@ -34,7 +33,7 @@ import { AppEvent } from './app-events.enum';
  * (See: test-state-transitions.spec.ts)
  */
 export const EventToProcessConfig = {
-    home: { roles: ['USER', 'ADMIN'], process: homeProcess, path: "/home" },
-    products: { roles: ['USER', 'ADMIN'], process: productsProcess, path: "/products" },
-    product: { roles: ['USER', 'ADMIN'], process: productProcess, path: "/products/product" },
-} as {[id: string]: { roles: string[] | undefined; process: (appEventModel: AppEventModel, appDataStore: AppDataStoreService) => Observable<AppEvent>; path: string; }};
+    home: { process: homeProcess, path: "/home" },
+    products: { process: productsProcess, path: "/products" },
+    product: { process: productProcess, path: "/products/product" },
+} as {[id: string]: { process: (appEventModel: AppEventModel, appDataStore: AppDataStoreService) => Observable<AppEvent>; path: string; }};

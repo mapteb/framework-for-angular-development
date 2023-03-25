@@ -54,11 +54,5 @@ describe('Walkthrough all state transitions', () => {
     cy.visit('/products')
     cy.contains('Page not found')
   })
-  it('From HOMESUCCESS state, when Admin button clicked, should load admin page', () => {
-    cy.visit('/')
-    cy.contains('Home works!')
-    cy.get('button').contains('Admin').click()
-    cy.contains('admin works!')
-  })
 })
 
