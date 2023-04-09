@@ -10,9 +10,10 @@ The framework has the following features:
 
 The development workflow to use this framework in an Angular project are:
 
-1. Configure all the supported view transitions. See [state-transitions.config.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/state-transitions-config/state-transitions.config.ts)
-2. Add one process function for each view (See [product.process.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/product/product/product.process.ts), [products.process.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/product/products/products.process.ts) etc.)
-3. Add view components and extend them from the smart component ([base.component.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/base/base.component.ts))
+1. Identify the state transitions the SPA supports. See the header comments in [state-transitions.config.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/state-transitions-config/state-transitions.config.ts)
+2. Configure all the supported state transitions. See [state-transitions.config.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/state-transitions-config/state-transitions.config.ts)
+3. Add one process function for each transition (See [product.process.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/product/product/product.process.ts), [products.process.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/product/products/products.process.ts) etc.)
+4. Add view components and extend them from the smart component ([base.component.ts](https://github.com/mapteb/framework-for-angular-development/blob/main/src/app/base/base.component.ts))
 
 Usage of this framework for a small SPA can be viewed in [StackBlitz](https://stackblitz.com/edit/angular-ivy-by5htr?file=NOTES.TXT)
 
