@@ -23,7 +23,7 @@ describe('Unit test each state transition:', () => {
       imports: [RouterTestingModule.withRoutes([
         { path: 'home', component: HomeComponent },
         { path: 'products', component: ProductsComponent },
-        { path: 'product', component: ProductComponent }
+        { path: 'products/product', component: ProductComponent }
       ])],
       declarations: [ BaseComponent ],
       providers: [ProductsService, AppDataStoreService]
