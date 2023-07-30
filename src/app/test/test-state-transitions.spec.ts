@@ -9,6 +9,11 @@ import { AppEvent } from '../state-transitions-config/app-events.enum';
 import { AppDataStoreService } from '../state-transitions-config/app-data-store.service';
 import { ProductsService } from '../product/products.service';
 import { AppState } from '../state-transitions-config/app-states.enum';
+import { LoginComponent } from '../auth/login/login.component';
+import { AdminComponent } from '../admin/admin.component';
+import { HomeComponent } from '../home/home.component';
+import { ProductsComponent } from '../product/products/products.component';
+import { ProductComponent } from '../product/product/product.component';
 
 describe('Unit test each state transition:', () => {
   let component: BaseComponent;
@@ -18,7 +23,13 @@ describe('Unit test each state transition:', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([])],
+      imports: [RouterTestingModule.withRoutes([
+        { path: 'login', component: LoginComponent },
+        { path: 'admin', component: AdminComponent },
+        { path: 'home', component: HomeComponent },
+        { path: 'products', component: ProductsComponent },
+        { path: 'products/product', component: ProductComponent }
+      ])],
       declarations: [ BaseComponent ],
       providers: [ProductsService, AppDataStoreService]
     })

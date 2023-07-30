@@ -42,6 +42,6 @@ export class ProductComponent extends BaseComponent implements OnInit {
   // delegates the event to the Smart Component
   // by specifying the event name and current view name
   handlePoductsEvent(path: string) {
-    this.doTransition(this.appDataStore, AppEvent.products, AppState.PRODUCTSSUCCESS);
+    this.doTransition(this.appDataStore, AppEvent.products, AppState.PRODUCTSUCCESS);
   }
 }
