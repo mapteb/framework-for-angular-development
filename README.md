@@ -20,4 +20,4 @@ Usage of this framework for a small SPA can be viewed in [StackBlitz](https://st
 Usage of  the framework for a starter example is in the [branch](https://github.com/mapteb/framework-for-angular-development/tree/starter-example)
 
 
-Unit tests can be run using the "ng test" command and e2e integration tests can be run using the command "ng e2e".
+Unit tests can be run using the "ng test" command and e2e integration tests can be run using the command "ng e2e" (requires "npm install cyress -g" to be run first).
