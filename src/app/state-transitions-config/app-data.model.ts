@@ -10,7 +10,7 @@ import { Product } from '../product/product.model';
  * 
  */
 export class AppData {
-    user: User;
+    user: User | null = null;
     products: Product[] = [];
     product: Product = new Product();
 }

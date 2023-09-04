@@ -24,7 +24,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
-  errorMsg$: Observable<string>;
+  errorMsg$: Observable<string> | null = null;
 
   constructor(protected override location: Location, protected override router: Router, 
     protected override appDataStore: AppDataStoreService) {
