@@ -38,9 +38,9 @@ import { AppState } from './app-states.enum';
  * (See: test-state-transitions.spec.ts)
  */
 export const EventToProcessConfig = {
-    login: { roles: undefined, process: loginProcess, path: "/home"  },
-    home: { roles: ['USER', 'ADMIN'], process: homeProcess, path: "/home" },
-    products: { roles: ['USER', 'ADMIN'], process: productsProcess, path: "/products" },
-    product: { roles: ['USER', 'ADMIN'], process: productProcess, path: "/products/product" },
-    admin: { roles: ['ADMIN'], process: adminProcess, path: "/admin" }
-} as {[id: string]: { roles: string[] | undefined; process: (appEventModel: AppEventModel, appDataStore: AppDataStoreService) => Observable<AppEvent>; path: string; }};
+    login: { roles: undefined, process: loginProcess, successPath: "/home", errorPath: "/login"  },
+    home: { roles: ['USER', 'ADMIN'], process: homeProcess, successPath: "/home", errorPath: "/home" },
+    products: { roles: ['USER', 'ADMIN'], process: productsProcess, successPath: "/products", errorPath: "/products" },
+    product: { roles: ['USER', 'ADMIN'], process: productProcess, successPath: "/products/product", errorPath: "/product" },
+    admin: { roles: ['ADMIN'], process: adminProcess, successPath: "/admin", errorPath: "/admin" }
+} as {[id: string]: { roles: string[] | undefined; process: (appEventModel: AppEventModel, appDataStore: AppDataStoreService) => Observable<AppEvent>; successPath: string; errorPath: string }};

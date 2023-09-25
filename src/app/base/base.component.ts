@@ -86,8 +86,8 @@ export class BaseComponent implements OnInit {
     // if (!user || !user.loginId) {
     //   user = appData?.user;
     // }
-    console.log(">> is appData user? ", (appData && appData.user && appData.user.loginId)? 'tru':'flse');
-    console.log(">> is store user? ", (user && user.loginId)? 'tru':'flse');
+    console.log(">> is appData user? ", (appData && appData.user && appData.user.loginId) ? 'tru' : 'flse');
+    console.log(">> is store user? ", (user && user.loginId) ? 'tru' : 'flse');
     // check for authentication
     if ((appData && appData.user && appData.user.loginId) || (user && user.loginId)) {
 
@@ -98,42 +98,36 @@ export class BaseComponent implements OnInit {
         // put the user in the store
         // If a path is configured in state-transition.config.ts for the appState and appEvent.
 
-        const path = EventToProcessConfig[appEvent].path;
-        console.log(">> target path: ", path);
-        if (path) {
-          appEventModel.appEvent = appEvent;
-          appEventModel.appState = appState;
-          appEventModel.appData = appData!;
+        appEventModel.appEvent = appEvent;
+        appEventModel.appState = appState;
+        appEventModel.appData = appData!;
 
-          // store the transition data so it an be used to restore a previous transition
-          // This is used to restore a view if the user happens to click the browser's Back button
-          appDataStore.setPreTransitonData({ appEvent, appState, appData: appData ? appData : new AppData() });
+        // store the transition data so it an be used to restore a previous transition
+        // This is used to restore a view if the user happens to click the browser's Back button
+        appDataStore.setPreTransitonData({ appEvent, appState, appData: appData ? appData : new AppData() });
 
-          // Call the process to pre-fetch data for the view
-          console.log(">> calling processor...");
-          EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore).subscribe((finalEvt) => {
-            // construct a final state like LOGINERROR
-            const finalState = (appEvent + finalEvt).toUpperCase();
-            appDataStore.setCurrentState(AppState[finalState as keyof typeof AppState]);
-            if (finalEvt === AppEvent.success) {
-              console.log(">> navTo, resultEvent: ", path, appState);
-              this.router.navigate([path], { state: { trsnData: appDataStore.getPreTransitonData() } });
-            } else {
-              // process error, send the user back to the same page
-              console.log(">> process Result: navTo: ", finalEvt, curPath);
-            }
-          });
+        // Call the process to pre-fetch data for the view
+        console.log(">> calling processor...");
+        EventToProcessConfig[appEvent]['process'](appEventModel, appDataStore).subscribe((finalEvt) => {
+          // construct a final state like LOGINERROR
+          const finalState = (appEvent + finalEvt).toUpperCase();
+          console.log(">> finalState: ", finalState);
+          appDataStore.setCurrentState(AppState[finalState as keyof typeof AppState]);
+          if (finalEvt.toString().endsWith("success")) {
+            console.log(">> navTo, resultEvent: ", EventToProcessConfig[appEvent].successPath, appState);
+            this.router.navigate([EventToProcessConfig[appEvent].successPath], { state: { trsnData: appDataStore.getPreTransitonData() } });
+          } else {
+            // process error, send the user back to the same page
+            console.log(">> process Result: navTo: ", finalEvt, EventToProcessConfig[appEvent].errorPath);
+            this.router.navigate([EventToProcessConfig[appEvent].errorPath], { state: { trsnData: appDataStore.getPreTransitonData() } });
+          }
+        });
+
       } else {
-        console.log(">> athorization error: ", appEvent, appState, this.router.url);
-        // TODO: implement authorization error condition
-        appEventModel.message = { error: 'Authorization error' };
-        this.router.navigate(['/**'], { state: { appEventModel } });
+        console.log(">> user not found: ", appEvent, appState, this.router.url);
+        // TODO: implement login error transition
+        this.router.navigate(['/**']);
       }
-    } else {
-      console.log(">> user not found: ", appEvent, appState, this.router.url);
-      // TODO: implement login error transition
-      this.router.navigate(['/**']);
     }
   }
- }
 }
